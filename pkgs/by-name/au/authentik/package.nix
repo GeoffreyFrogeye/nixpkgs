@@ -168,6 +168,7 @@ let
 
         propagatedBuildInputs = with final; [
           argon2-cffi
+          boto3
           celery
           channels
           channels-redis

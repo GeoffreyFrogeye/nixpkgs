@@ -1,0 +1,20 @@
+{
+  "version": "1.107.1",
+  "hash": "sha256-+ACJtlNTtA15Ie/mgKdtyb1i8YKtNF0FFpP/Cqc4I8Y=",
+  "container_tag": "20240625",
+  "geodata_hash": "sha256-jwYjXpnM/zVNI1G36tkLkFpPDXbpqyB58ZIwpdhJRJU=",
+  "components": {
+    "cli": {
+      "npmDepsHash": "sha256-0mIfdLgQH1PWRVlEJVatuW7nnvp1ATvdJmL9inLZ9GQ="
+    },
+    "server": {
+      "npmDepsHash": "sha256-7VDvPF80LCL3Ern0eN/Q1FDL+a0ChgUlZLroZ99GH/Q="
+    },
+    "web": {
+      "npmDepsHash": "sha256-dX129dZK2J6KDKjkrbtYZ8LurPL/ot6o16HE/S/DAms="
+    },
+    "open-api/typescript-sdk": {
+      "npmDepsHash": "sha256-WiYy5uUDQeEiXfDg/NVuKNx6q9G0rVlbB62HLUcbV74="
+    }
+  }
+}

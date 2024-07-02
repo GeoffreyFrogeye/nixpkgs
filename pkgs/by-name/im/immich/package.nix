@@ -5,6 +5,7 @@
 , python3
 , nodejs
 , runCommand
+, nixosTests
 # build-time deps
 , pkg-config
 , makeWrapper
@@ -234,6 +235,7 @@ in buildNpmPackage' {
   '';
 
   passthru = {
+    tests = { inherit (nixosTests) immich; };
     inherit cli web machine-learning geodata;
     updateScript = ./update.sh;
   };

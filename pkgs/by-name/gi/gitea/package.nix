@@ -11,7 +11,7 @@
 , openssh
 , pam
 , sqliteSupport ? true
-, pamSupport ? true
+, pamSupport ? stdenv.hostPlatform.isLinux
 , runCommand
 , brotli
 , xorg
@@ -93,8 +93,10 @@ in buildGoModule rec {
     data-compressed = runCommand "gitea-data-compressed" {
       nativeBuildInputs = [ brotli xorg.lndir ];
     } ''
-      mkdir $out
-      lndir ${gitea.data}/ $out/
+      mkdir -p $out/{options,public,templates}
+      lndir ${frontend}/public $out/public
+      lndir ${gitea.data}/options $out/options
+      lndir ${gitea.data}/templates $out/templates
 
       # Create static gzip and brotli files
       find -L $out -type f -regextype posix-extended -iregex '.*\.(css|html|js|svg|ttf|txt)' \
@@ -110,7 +112,6 @@ in buildGoModule rec {
     homepage = "https://about.gitea.com";
     license = licenses.mit;
     maintainers = with maintainers; [ ma27 techknowlogick SuperSandro2000 ];
-    broken = stdenv.isDarwin;
     mainProgram = "gitea";
   };
 }

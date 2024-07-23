@@ -1,6 +1,5 @@
 {
   lib,
-  stdenv,
   buildGoModule,
   fetchFromGitHub,
   git,
@@ -11,13 +10,13 @@
 
 buildGoModule rec {
   pname = "kubescape";
-  version = "3.0.12";
+  version = "3.0.14";
 
   src = fetchFromGitHub {
     owner = "kubescape";
     repo = "kubescape";
     rev = "refs/tags/v${version}";
-    hash = "sha256-K9I3vazeAk6hqswgQ+wRurwXvXBs7oFDBeNk7q7lXLo=";
+    hash = "sha256-vTbNnQwHU1ALjNrZHE7nNw53DIe4lEifYOqkIeZohVE=";
     fetchSubmodules = true;
   };
 

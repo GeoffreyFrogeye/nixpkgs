@@ -64,6 +64,9 @@ let
     # linux kernel configuration
     kernel = callLibs ./kernel.nix;
 
+    # network
+    network = callLibs ./network;
+
     # TODO: For consistency, all builtins should also be available from a sub-library;
     # these are the only ones that are currently not
     inherit (builtins) addErrorContext isPath trace typeOf unsafeGetAttrPos;
@@ -73,7 +76,7 @@ let
       info showWarnings nixpkgsVersion version isInOldestRelease
       mod compare splitByAndCompare seq deepSeq lessThan add sub
       functionArgs setFunctionArgs isFunction toFunction mirrorFunctionArgs
-      toHexString toBaseDigits inPureEvalMode isBool isInt pathExists
+      fromHexString toHexString toBaseDigits inPureEvalMode isBool isInt pathExists
       genericClosure readFile;
     inherit (self.fixedPoints) fix fix' converge extends composeExtensions
       composeManyExtensions makeExtensible makeExtensibleWithCustomName;
@@ -83,8 +86,8 @@ let
       mapAttrs' mapAttrsToList attrsToList concatMapAttrs mapAttrsRecursive
       mapAttrsRecursiveCond genAttrs isDerivation toDerivation optionalAttrs
       zipAttrsWithNames zipAttrsWith zipAttrs recursiveUpdateUntil
-      recursiveUpdate matchAttrs mergeAttrsList overrideExisting showAttrPath getOutput
-      getBin getLib getDev getMan chooseDevOutputs zipWithNames zip
+      recursiveUpdate matchAttrs mergeAttrsList overrideExisting showAttrPath getOutput getFirstOutput
+      getBin getLib getStatic getDev getInclude getMan chooseDevOutputs zipWithNames zip
       recurseIntoAttrs dontRecurseIntoAttrs cartesianProduct cartesianProductOfSets
       mapCartesianProduct updateManyAttrsByPath listToAttrs hasAttr getAttr isAttrs intersectAttrs removeAttrs;
     inherit (self.lists) singleton forEach map foldr fold foldl foldl' imap0 imap1

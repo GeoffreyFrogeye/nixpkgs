@@ -47,12 +47,19 @@ makeScopeWithSplicing' {
     fetchurl = fetchurlBoot;
   };
 
+  # macOS 12.3 SDK
+  apple_sdk_12_3 = pkgs.callPackage ../os-specific/darwin/apple-sdk-12.3 { };
+
   # Pick an SDK
-  apple_sdk = if stdenv.hostPlatform.isAarch64 then apple_sdk_11_0 else apple_sdk_10_12;
+  apple_sdk = {
+    "10.12" = apple_sdk_10_12;
+    "11.0" = apple_sdk_11_0;
+  }.${stdenv.hostPlatform.darwinSdkVersion}
+  or (throw "Unsupported sdk: ${stdenv.hostPlatform.darwinSdkVersion}");
 
   # Pick the source of libraries: either Apple's open source releases, or the
   # SDK.
-  useAppleSDKLibs = stdenv.hostPlatform.isAarch64;
+  useAppleSDKLibs = lib.versionAtLeast stdenv.hostPlatform.darwinSdkVersion "11";
 
   selectAttrs = attrs: names:
     lib.listToAttrs (lib.concatMap (n: lib.optionals (attrs ? "${n}") [(lib.nameValuePair n attrs."${n}")]) names);
@@ -76,7 +83,7 @@ in
 
 impure-cmds // appleSourcePackages // chooseLibs // {
 
-  inherit apple_sdk apple_sdk_10_12 apple_sdk_11_0;
+  inherit apple_sdk apple_sdk_10_12 apple_sdk_11_0 apple_sdk_12_3;
 
   stdenvNoCF = stdenv.override {
     extraBuildInputs = [];
@@ -179,9 +186,13 @@ impure-cmds // appleSourcePackages // chooseLibs // {
 
   lsusb = callPackage ../os-specific/darwin/lsusb { };
 
-  moltenvk = pkgs.darwin.apple_sdk_11_0.callPackage ../os-specific/darwin/moltenvk {
-    inherit (apple_sdk_11_0.frameworks) AppKit Foundation Metal QuartzCore;
-    inherit (apple_sdk_11_0.libs) simd;
+  moltenvk = callPackage ../os-specific/darwin/moltenvk {
+    stdenv = pkgs.overrideSDK stdenv {
+      darwinMinVersion = "10.15";
+      darwinSdkVersion = "12.3";
+    };
+    inherit (apple_sdk.frameworks) AppKit Foundation Metal QuartzCore;
+    inherit (apple_sdk.libs) simd;
   };
 
   openwith = callPackage ../os-specific/darwin/openwith { };

@@ -171,6 +171,30 @@ buildLuarocksPackage {
   };
 }) {};
 
+busted-htest = callPackage({ buildLuarocksPackage, fetchFromGitHub, fetchurl }:
+buildLuarocksPackage {
+  pname = "busted-htest";
+  version = "1.0.0-2";
+  knownRockspec = (fetchurl {
+    url    = "mirror://luarocks/busted-htest-1.0.0-2.rockspec";
+    sha256 = "10d2pbh2rfy4ygp40h8br4w5j1z5syq5pn6knd4bbnacmswnmcdl";
+  }).outPath;
+  src = fetchFromGitHub {
+    owner = "hishamhm";
+    repo = "busted-htest";
+    rev = "1.0.0";
+    hash = "sha256-tGAQUSeDt+OV/TBAJo/JFdyeBRRZaIQEJG+SKcCaQhs=";
+  };
+
+
+  meta = {
+    homepage = "https://github.com/hishamhm/busted-htest";
+    description = "A pretty output handler for Busted";
+    maintainers = with lib.maintainers; [ mrcjkb ];
+    license.fullName = "MIT";
+  };
+}) {};
+
 cassowary = callPackage({ buildLuarocksPackage, fetchFromGitHub, fetchurl, luaOlder, penlight }:
 buildLuarocksPackage {
   pname = "cassowary";
@@ -2393,14 +2417,14 @@ buildLuarocksPackage {
 lz-n = callPackage({ buildLuarocksPackage, fetchurl, fetchzip, luaOlder }:
 buildLuarocksPackage {
   pname = "lz.n";
-  version = "1.4.2-1";
+  version = "1.4.3-1";
   knownRockspec = (fetchurl {
-    url    = "mirror://luarocks/lz.n-1.4.2-1.rockspec";
-    sha256 = "1jvmp35c5n43frk0bkpgfd9p76p9f5zy094ybzanydz9d6p5d7c4";
+    url    = "mirror://luarocks/lz.n-1.4.3-1.rockspec";
+    sha256 = "09nxw0yqqgg4i04fqs0q3c17b3grhz71irr1105m4gms9a292j4v";
   }).outPath;
   src = fetchzip {
-    url    = "https://github.com/nvim-neorocks/lz.n/archive/v1.4.2.zip";
-    sha256 = "0g2gghw7i71sm9szw772pwhwy73nfx4lx1x0393hjl7cx95r885b";
+    url    = "https://github.com/nvim-neorocks/lz.n/archive/v1.4.3.zip";
+    sha256 = "11ic8hylck3dvlp6d9kzblingbi167j2kcid155x4hpc2hhqf2aj";
   };
 
   disabled = luaOlder "5.1";
